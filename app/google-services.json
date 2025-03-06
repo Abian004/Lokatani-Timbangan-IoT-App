@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "889033468061",
+    "project_id": "timbangan-iot-f364f",
+    "storage_bucket": "timbangan-iot-f364f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889033468061:android:1c1cb163c2e7ed56340c74",
+        "android_client_info": {
+          "package_name": "com.example.googleauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889033468061-1t4u676ekobo807idm96pqilkvkesnjl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.googleauth",
+            "certificate_hash": "4f8dc5979bc965db8a4306cf019e261d4a7166e9"
+          }
+        },
+        {
+          "client_id": "889033468061-9vt9p3hijstntk8e5fklbv0qgeqngu63.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARz0_uPca40M_GkIpGODNlk7olHUuo0NU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889033468061-9vt9p3hijstntk8e5fklbv0qgeqngu63.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
