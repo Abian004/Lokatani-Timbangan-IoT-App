@@ -5,17 +5,18 @@ plugins {
 }
 
 android {
-    namespace = "com.example.googleauth"
+    namespace = "com.lokatani.weightsensor"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.googleauth"
+        applicationId = "com.lokatani.weightsensor"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        setProperty("archivesBaseName", "Lokatani Weight")
     }
 
     buildTypes {

@@ -1,10 +1,10 @@
-package com.example.googleauth
+package com.lokatani.weightsensor
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.googleauth.databinding.ActivityMainBinding
+import com.lokatani.weightsensor.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

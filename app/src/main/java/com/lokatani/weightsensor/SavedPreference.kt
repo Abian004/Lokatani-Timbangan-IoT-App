@@ -1,4 +1,4 @@
-package com.example.googleauth
+package com.lokatani.weightsensor
 
 import android.content.Context
 import android.content.SharedPreferences

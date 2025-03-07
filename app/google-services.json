@@ -41,6 +41,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889033468061:android:2c8779ae506a69e4340c74",
+        "android_client_info": {
+          "package_name": "com.lokatani.weightsensor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "889033468061-sks3nalj4n6jpuhth88jm626bt9hk42c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lokatani.weightsensor",
+            "certificate_hash": "4f8dc5979bc965db8a4306cf019e261d4a7166e9"
+          }
+        },
+        {
+          "client_id": "889033468061-9vt9p3hijstntk8e5fklbv0qgeqngu63.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARz0_uPca40M_GkIpGODNlk7olHUuo0NU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "889033468061-9vt9p3hijstntk8e5fklbv0qgeqngu63.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

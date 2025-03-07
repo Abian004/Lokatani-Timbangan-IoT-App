@@ -1,4 +1,4 @@
-package com.example.googleauth
+package com.lokatani.weightsensor
 
 import org.junit.Test
 
