@@ -5,8 +5,8 @@ import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 
 object SavedPreference {
-    private const val EMAIL_KEY = "email"
-    private const val USERNAME_KEY = "username"
+    private const val EMAIL = "email"
+    private const val USERNAME = "username"
 
     private fun getSharedPreference(ctx: Context): SharedPreferences {
         return PreferenceManager.getDefaultSharedPreferences(ctx)
@@ -17,19 +17,19 @@ object SavedPreference {
     }
 
     fun getEmail(context: Context): String? {
-        return getSharedPreference(context).getString(EMAIL_KEY, "")
+        return getSharedPreference(context).getString(EMAIL, "")
     }
 
     fun setEmail(context: Context, email: String) {
-        editor(context, EMAIL_KEY, email)
+        editor(context, EMAIL, email)
     }
 
     fun getUsername(context: Context): String? {
-        return getSharedPreference(context).getString(USERNAME_KEY, "")
+        return getSharedPreference(context).getString(USERNAME, "")
     }
 
     fun setUsername(context: Context, username: String) {
-        editor(context, USERNAME_KEY, username)
+        editor(context, USERNAME, username)
     }
     
     fun clearPreference(context: Context) {

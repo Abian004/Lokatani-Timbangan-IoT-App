@@ -5,21 +5,12 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.lokatani.weightsensor.databinding.ActivityMainBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.GoogleAuthProvider
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    lateinit var mGoogleSignInClient: GoogleSignInClient
-    val Req_Code: Int = 123
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,70 +19,151 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         FirebaseApp.initializeApp(this)
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         firebaseAuth = FirebaseAuth.getInstance()
 
-        binding.Signin.setOnClickListener {
-            Toast.makeText(this, "Logging In", Toast.LENGTH_SHORT).show()
-            signInGoogle()
+        // Email/Password Login button click listener
+        binding.buttonLogin.setOnClickListener {
+            loginWithEmail()
         }
-    }
 
-    private fun signInGoogle() {
-        val signInIntent: Intent = mGoogleSignInClient.signInIntent
-        startActivityForResult(signInIntent, Req_Code)
-    }
-
-    // onActivityResult() function : this is where
-    // we provide the task and data for the Google Account
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == Req_Code) {
-            val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
-            handleResult(task)
+        // Email/Password Register button click listener
+        binding.buttonRegister.setOnClickListener {
+            registerWithEmail()
         }
-    }
 
-    private fun handleResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account: GoogleSignInAccount? = completedTask.getResult(ApiException::class.java)
-            if (account != null) {
-                UpdateUI(account)
-            }
-        } catch (e: ApiException) {
-            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    // this is where we update the UI after Google signin takes place
-    private fun UpdateUI(account: GoogleSignInAccount) {
-        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                SavedPreference.setEmail(this, account.email.toString())
-                SavedPreference.setUsername(this, account.displayName.toString())
-                val intent = Intent(this, DashboardActivity::class.java)
-                startActivity(intent)
-                finish()
+        // Forgot password functionality (optional)
+        binding.forgotPassword.setOnClickListener {
+            val email = binding.editTextEmail.editText?.text.toString().trim()
+            if (email.isNotEmpty()) {
+                firebaseAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            Toast.makeText(this, "Password reset email sent", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Failed to send reset email: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+            } else {
+                Toast.makeText(this, "Please enter your email address", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    // Login with email and password
+    private fun loginWithEmail() {
+        val email = binding.editTextEmail.editText?.text.toString().trim() ?: ""
+        val password = binding.editTextPassword.editText?.text.toString().trim() ?: ""
+
+        // Validate inputs
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Show progress indicator
+        binding.buttonLogin.isEnabled = false
+        binding.buttonRegister.isEnabled = false
+
+        // Sign in with email and password
+        firebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                // Enable buttons
+                binding.buttonLogin.isEnabled = true
+                binding.buttonRegister.isEnabled = true
+
+                if (task.isSuccessful) {
+                    // Login success
+                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+
+                    // Get current user
+                    val user = firebaseAuth.currentUser
+                    if (user != null) {
+                        // Save user info
+                        SavedPreference.setEmail(this, user.email ?: "")
+                        SavedPreference.setUsername(this, user.displayName ?: user.email ?: "User")
+
+                        // Navigate to dashboard
+                        val intent = Intent(this, DashboardActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                } else {
+                    // If login fails, display a message to the user
+                    Toast.makeText(
+                        this,
+                        "Authentication failed: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+    }
+
+    // Register with email and password
+    private fun registerWithEmail() {
+        val email = binding.editTextEmail.editText?.text.toString().trim() ?: ""
+        val password = binding.editTextPassword.editText?.text.toString().trim() ?: ""
+
+        // Validate inputs
+        when {
+            email.isEmpty() -> {
+                Toast.makeText(this, "Please enter an email", Toast.LENGTH_SHORT).show()
+                return
+            }
+            password.isEmpty() -> {
+                Toast.makeText(this, "Please enter a password", Toast.LENGTH_SHORT).show()
+                return
+            }
+            password.length < 6 -> {
+                Toast.makeText(this, "Password should be at least 6 characters", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+
+        // Show progress indicator
+        binding.buttonLogin.isEnabled = false
+        binding.buttonRegister.isEnabled = false
+
+        // Create user with email and password
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                // Enable buttons
+                binding.buttonLogin.isEnabled = true
+                binding.buttonRegister.isEnabled = true
+
+                if (task.isSuccessful) {
+                    // Registration success
+                    Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+
+                    // Get current user
+                    val user = firebaseAuth.currentUser
+                    if (user != null) {
+                        // Save user info
+                        SavedPreference.setEmail(this, user.email ?: "")
+                        SavedPreference.setUsername(this, user.displayName ?: user.email ?: "User")
+
+                        // Navigate to dashboard
+                        val intent = Intent(this, DashboardActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                } else {
+                    // If registration fails, display a message to the user
+                    Toast.makeText(
+                        this,
+                        "Registration failed: ${task.exception?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 
     override fun onStart() {
         super.onStart()
-        if (GoogleSignIn.getLastSignedInAccount(this) != null) {
-            startActivity(
-                Intent(
-                    this, DashboardActivity
-                    ::class.java
-                )
-            )
+        // Check if user is signed in with email
+        val currentUser = firebaseAuth.currentUser
+        if (currentUser != null) {
+            // User is already logged in with email, redirect to dashboard
+            startActivity(Intent(this, DashboardActivity::class.java))
             finish()
         }
     }

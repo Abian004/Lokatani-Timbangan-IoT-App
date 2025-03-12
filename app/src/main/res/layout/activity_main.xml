@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".MainActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginPage"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".MainActivity">
 
     <!-- Background Image -->
     <ImageView
@@ -14,154 +16,157 @@ tools:context=".MainActivity">
         android:layout_height="match_parent"
         android:src="@drawable/sayuran_pagi_cover"
         android:scaleType="centerCrop"
-        android:alpha="0.15"
+        android:alpha="0.3"
         android:contentDescription="Background Image" />
 
     <!-- Semi-transparent overlay for better readability -->
     <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-
-    <!-- Content Container -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="24dp">
+        android:background="@android:color/transparent" />
 
-        <!-- App Logo -->
+    <!-- Logo Section -->
+    <LinearLayout
+        android:id="@+id/logoSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingTop="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
         <ImageView
-            android:id="@+id/appLogo"
-            android:layout_width="180dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="64dp"
-            android:src="@drawable/lokatani_logo"
-            android:contentDescription="Lokatani Logo"
-            android:scaleType="fitCenter"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Welcome Text -->
-        <TextView
-            android:id="@+id/welcomeText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:text="Lokafresh Timbangan"
-            android:textAlignment="center"
-            android:textSize="28sp"
-            android:textStyle="bold"
-            android:textColor="#212121"
-            app:layout_constraintTop_toBottomOf="@id/appLogo" />
+            android:id="@+id/logo"
+            android:layout_width="170dp"
+            android:layout_height="145dp"
+            android:contentDescription="App Logo"
+            android:src="@drawable/logo" />
 
         <TextView
-            android:id="@+id/loginPrompt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="Masuk untuk akses sistem pertanian digital"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:textColor="#757575"
-            app:layout_constraintTop_toBottomOf="@id/welcomeText" />
-
-        <!-- Slogan or description - similar to Lokatani's focus on agriculture -->
-        <TextView
-            android:id="@+id/sloganText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="36dp"
-            android:text="Solusi Digital untuk Pertanian Berkelanjutan"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:textStyle="italic"
-            android:textColor="#4CAF50"
-            app:layout_constraintTop_toBottomOf="@id/loginPrompt" />
-
-        <!-- Google Sign-in Button (Styled with Lokatani green) -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/Signin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:padding="12dp"
-            android:text="Masuk dengan Google"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-medium"
-            app:iconTint="@null"
-            app:iconGravity="start"
-            app:iconPadding="8dp"
-            android:backgroundTint="#4CAF50"
-            app:cornerRadius="8dp"
-            android:elevation="2dp"
-            app:layout_constraintTop_toBottomOf="@id/sloganText"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Email Sign-in Button as an alternative -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/emailSignin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:padding="12dp"
-            android:text="Masuk dengan Email"
-            android:textColor="#4CAF50"
-            android:textSize="16sp"
-            android:fontFamily="sans-serif-medium"
-            app:iconTint="@null"
-            app:iconGravity="start"
-            app:iconPadding="8dp"
-            android:backgroundTint="#FFFFFF"
-            app:strokeColor="#4CAF50"
-            app:strokeWidth="1dp"
-            app:cornerRadius="8dp"
-            app:layout_constraintTop_toBottomOf="@id/Signin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <!-- Register option -->
-        <TextView
-            android:id="@+id/registerPrompt"
+            android:id="@+id/appName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Belum punya akun? "
-            android:textSize="14sp"
-            android:textColor="#757575"
-            app:layout_constraintTop_toBottomOf="@id/emailSignin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="packed" />
+            android:text="LokaFresh Timbangan pintar"
+            android:textColor="@color/green"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/registerLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Daftar Sekarang"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textColor="#4CAF50"
-            app:layout_constraintTop_toTopOf="@id/registerPrompt"
-            app:layout_constraintStart_toEndOf="@id/registerPrompt"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_chainStyle="packed" />
+    <!-- Form Section -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoSection"
+        tools:layout_editor_absoluteX="30dp">
 
-        <!-- Privacy Policy Text -->
-        <TextView
-            android:id="@+id/privacyText"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Dengan masuk, Anda menyetujui Syarat dan Ketentuan serta Kebijakan Privasi kami"
-            android:textAlignment="center"
-            android:textSize="12sp"
-            android:textColor="#757575"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/loginCaption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Masuk ke akun Anda"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
+            <!-- email box - FIXED HEIGHT -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:hint="Email"
+                android:textColorHint="?android:attr/textColorHint"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:hintEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:boxStrokeColor="@color/green">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:inputType="textEmailAddress"
+                    android:ems="15"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- password box - FIXED HEIGHT -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:hint="Password"
+                android:textColorHint="?android:attr/textColorHint"
+                app:passwordToggleEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="48dp"
+                    android:inputType="textPassword"
+                    android:ems="15"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/forgotPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingTop="8dp"
+                android:text="Lupa password?"
+                android:textColor="@color/green"
+                android:textSize="14sp" />
+
+            <!-- Register option -->
+            <Button
+                android:id="@+id/buttonLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="8dp"
+                android:backgroundTint="@color/green"
+                android:background="@drawable/rounded_button_login"
+                android:text="Log In"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/registerPrompt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Belum punya akun? "
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/buttonRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Daftar Sekarang"
+                android:textAlignment="center"
+                android:textColor="@color/green"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
